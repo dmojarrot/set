@@ -1,0 +1,14 @@
+.red {
+  filter: invert(13%) sepia(94%) saturate(7466%) hue-rotate(0deg)
+    brightness(94%) contrast(115%);
+}
+
+.purple {
+  filter: invert(5%) sepia(78%) saturate(6858%) hue-rotate(276deg)
+    brightness(97%) contrast(101%);
+}
+
+.green {
+  filter: invert(12%) sepia(93%) saturate(1234%) hue-rotate(446deg)
+    brightness(87%) contrast(156%);
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import '../syles/card.css'
 
 function generateRandomInteger(max) {
   return Math.floor(Math.random() * max) + 1
@@ -6,36 +7,44 @@ function generateRandomInteger(max) {
 
 const possibilities = 3
 
+const colors = ['red', 'green', 'purple']
+
 const data = [
   {
     id: 1,
     href: require('../assets/shapes/DiamondOutlined.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 2,
     href: require('../assets/shapes/DiamondSolid.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 3,
     href: require('../assets/shapes/DiamondStriped.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 4,
     href: require('../assets/shapes/OvalOutlined.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 5,
     href: require('../assets/shapes/OvalSolid.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 6,
     href: require('../assets/shapes/OvalStriped.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 7,
@@ -46,18 +55,31 @@ const data = [
     id: 8,
     href: require('../assets/shapes/SquiggleSolid.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
   {
     id: 9,
     href: require('../assets/shapes/SquiggleStriped.svg').default,
     num: generateRandomInteger(possibilities),
+    color: colors[generateRandomInteger(possibilities)],
   },
 ]
 
-const colors = ['red', 'green', 'purple']
-
-function FigStack() {
-  return <div></div>
+function FigStack(number, attr) {
+  return (
+    <div className={'flex'}>
+      {[...Array(number)].map((e, i) => (
+        <img
+          className={`${attr.color}`}
+          key={attr.id}
+          src={attr.href}
+          alt='W3Schools.com'
+          width={30}
+          height={30}
+        />
+      ))}
+    </div>
+  )
 }
 
 function Card() {
@@ -70,19 +92,8 @@ function Card() {
         <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
           <p className='text-lg font-semibold text-zinc-200'>Set Found</p>
         </div>
-        <div className='grid grid-cols-3 gap-4 text-white justify-items-center'>
-          {data.map((game) =>
-            [...Array(game.num)].map((e, i) => (
-              <img
-                className='border'
-                key={game.id}
-                src={game.href}
-                alt='W3Schools.com'
-                width={50}
-                height={50}
-              />
-            ))
-          )}
+        <div className='grid grid-cols-3 gap-10 text-white justify-items-center text-center'>
+          {data.map((game) => FigStack(game.num, game))}
         </div>
         <div className='mt-5 text-zinc-300'>
           <p>Sets possible: {}</p>
