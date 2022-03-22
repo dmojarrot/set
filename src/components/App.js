@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './syles/logo.svg';
+import './syles/App.css';
 
 function App() {
   return (
