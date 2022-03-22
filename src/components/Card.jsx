@@ -166,19 +166,23 @@ function Selector(attr) {
 }
 
 function FigStack(attr) {
+  const [disable, setDisable] = React.useState(false)
+
   return (
     <button
       onClick={() => {
         Selector(attr)
+        setDisable(true)
       }}
+      disabled={disable}
     >
-      <div className={'flex gap-3 border rounded-lg border-zinc-600 p-1'}>
+      <div className={'flex  border rounded-lg border-zinc-600 p-1'}>
         {[...Array(attr.num)].map((e, i) => (
           <img
             className={`${attr.color}`}
             src={attr.href.url}
             alt='W3Schools.com'
-            width={30}
+            width={25}
             height={30}
           />
         ))}
@@ -189,8 +193,8 @@ function FigStack(attr) {
 
 function Card() {
   return (
-    <div className='flex flex-col items-center w-full px-5 sm:w-7/12 lg:w-5/12 text-white'>
-      <p className='flex justify-start w-full text-5xl ml-10 mb-5 mt-5 font-semibold text-pink-600'>
+    <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white'>
+      <p className='flex justify-start w-full text-4xl ml-10 mb-2 mt-5 font-semibold text-pink-600'>
         Set Game
       </p>
       <div className='dark:bg-black bg-white rounded-xl w-full shadow-lg p-5'>
