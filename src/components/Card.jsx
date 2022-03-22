@@ -1,84 +1,189 @@
 import React from 'react'
 import '../syles/card.css'
+import toast from 'react-hot-toast'
 
-function generateRandomInteger(max) {
-  return Math.floor(Math.random() * max) + 1
+function generateRandomInteger(possibilities, diff) {
+  return Math.floor(Math.random() * possibilities) + diff
 }
 
 const possibilities = 3
 
 const colors = ['red', 'green', 'purple']
 
-const data = [
+const options = [
   {
     id: 1,
-    href: require('../assets/shapes/DiamondOutlined.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/DiamondOutlined.svg').default,
   },
   {
     id: 2,
-    href: require('../assets/shapes/DiamondSolid.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/DiamondSolid.svg').default,
   },
   {
     id: 3,
-    href: require('../assets/shapes/DiamondStriped.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/DiamondStriped.svg').default,
   },
   {
     id: 4,
-    href: require('../assets/shapes/OvalOutlined.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/OvalOutlined.svg').default,
   },
   {
     id: 5,
-    href: require('../assets/shapes/OvalSolid.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/OvalSolid.svg').default,
   },
   {
     id: 6,
-    href: require('../assets/shapes/OvalStriped.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/OvalStriped.svg').default,
   },
   {
     id: 7,
-    href: require('../assets/shapes/SquiggleOutlined.svg').default,
-    num: generateRandomInteger(possibilities),
+    url: require('../assets/shapes/SquiggleOutlined.svg').default,
   },
   {
     id: 8,
-    href: require('../assets/shapes/SquiggleSolid.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/SquiggleSolid.svg').default,
   },
   {
     id: 9,
-    href: require('../assets/shapes/SquiggleStriped.svg').default,
-    num: generateRandomInteger(possibilities),
-    color: colors[generateRandomInteger(possibilities)],
+    url: require('../assets/shapes/SquiggleStriped.svg').default,
   },
 ]
 
-function FigStack(number, attr) {
+const data = [
+  {
+    href: options[generateRandomInteger(9, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+  {
+    href: options[generateRandomInteger(options.length, 0)],
+    num: generateRandomInteger(possibilities, 1),
+    color: colors[generateRandomInteger(possibilities, 0)],
+  },
+]
+
+const comparations = []
+
+function Selector(attr) {
+  if (comparations.length < 3) {
+    let figure = attr.href.id
+    let shading = attr.href.id % 3 !== 0 ? attr.href.id % 3 : 3
+    if (figure < 4) {
+      figure = 1
+    } else if (figure > 3 && figure < 6) {
+      figure = 2
+    } else {
+      figure = 3
+    }
+
+    comparations.push([figure, attr.color, attr.num, shading])
+  }
+
+  if (comparations.length === 3) {
+    const isShape =
+      (comparations[0][0] === comparations[1][0]) +
+      (comparations[0][0] === comparations[2][0]) +
+      (comparations[1][0] === comparations[2][0])
+    const isColor =
+      (comparations[0][1] === comparations[1][1]) +
+      (comparations[0][1] === comparations[2][1]) +
+      (comparations[1][1] === comparations[2][1])
+    const isSymbol =
+      (comparations[0][2] === comparations[1][2]) +
+      (comparations[0][2] === comparations[2][2]) +
+      (comparations[1][2] === comparations[2][2])
+    const isShade =
+      (comparations[0][3] === comparations[1][3]) +
+      (comparations[0][3] === comparations[2][3]) +
+      (comparations[1][3] === comparations[2][3])
+
+    if (isShape === 0 || isShape === 3) {
+      if (isColor === 0 || isColor === 3) {
+        if (isSymbol === 0 || isSymbol === 3) {
+          if (isShade === 0 || isShade === 3) {
+            toast.success('Correct set!')
+          }
+        }
+      }
+    } else {
+      toast.error('Incorrect set!')
+    }
+  }
+
+  for (let index = 0; index < comparations.length; index++) {
+    console.log(comparations[index])
+  }
+}
+
+function FigStack(attr) {
   return (
-    <div className={'flex'}>
-      {[...Array(number)].map((e, i) => (
-        <img
-          className={`${attr.color}`}
-          key={attr.id}
-          src={attr.href}
-          alt='W3Schools.com'
-          width={30}
-          height={30}
-        />
-      ))}
-    </div>
+    <button
+      onClick={() => {
+        Selector(attr)
+      }}
+    >
+      <div className={'flex gap-3 border rounded-lg border-zinc-600 p-1'}>
+        {[...Array(attr.num)].map((e, i) => (
+          <img
+            className={`${attr.color}`}
+            src={attr.href.url}
+            alt='W3Schools.com'
+            width={30}
+            height={30}
+          />
+        ))}
+      </div>
+    </button>
   )
 }
 
@@ -92,8 +197,8 @@ function Card() {
         <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
           <p className='text-lg font-semibold text-zinc-200'>Set Found</p>
         </div>
-        <div className='grid grid-cols-3 gap-10 text-white justify-items-center text-center'>
-          {data.map((game) => FigStack(game.num, game))}
+        <div className='grid grid-cols-3 gap-10  text-white justify-items-center text-center'>
+          {data.map((game) => FigStack(game))}
         </div>
         <div className='mt-5 text-zinc-300'>
           <p>Sets possible: {}</p>
