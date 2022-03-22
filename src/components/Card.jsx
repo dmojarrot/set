@@ -152,8 +152,14 @@ function Selector(attr) {
         if (isSymbol === 0 || isSymbol === 3) {
           if (isShade === 0 || isShade === 3) {
             toast.success('Correct set!')
+          } else {
+            toast.error('Incorrect set!')
           }
+        } else {
+          toast.error('Incorrect set!')
         }
+      } else {
+        toast.error('Incorrect set!')
       }
     } else {
       toast.error('Incorrect set!')
