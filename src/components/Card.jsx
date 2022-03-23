@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../syles/card.css'
 import toast from 'react-hot-toast'
 
@@ -114,44 +114,51 @@ const data = [
 
 const comparations = []
 
-function Selector(attr) {
-  if (comparations.length < 3) {
-    let figure = attr.href.id
-    let shading = attr.href.id % 3 !== 0 ? attr.href.id % 3 : 3
-    if (figure < 4) {
-      figure = 1
-    } else if (figure > 3 && figure < 6) {
-      figure = 2
-    } else {
-      figure = 3
+function FigStack(attr) {
+  const [disabled, setDisabled] = useState(false)
+
+  function Selector() {
+    if (comparations.length < 3) {
+      let figure = attr.href.id
+      let shading = attr.href.id % 3 !== 0 ? attr.href.id % 3 : 3
+      if (figure < 4) {
+        figure = 1
+      } else if (figure > 3 && figure < 6) {
+        figure = 2
+      } else {
+        figure = 3
+      }
+
+      comparations.push([figure, attr.color, attr.num, shading])
+      console.log(comparations.slice(-1))
     }
 
-    comparations.push([figure, attr.color, attr.num, shading])
-  }
+    if (comparations.length === 3) {
+      const isShape =
+        (comparations[0][0] === comparations[1][0]) +
+        (comparations[0][0] === comparations[2][0]) +
+        (comparations[1][0] === comparations[2][0])
+      const isColor =
+        (comparations[0][1] === comparations[1][1]) +
+        (comparations[0][1] === comparations[2][1]) +
+        (comparations[1][1] === comparations[2][1])
+      const isSymbol =
+        (comparations[0][2] === comparations[1][2]) +
+        (comparations[0][2] === comparations[2][2]) +
+        (comparations[1][2] === comparations[2][2])
+      const isShade =
+        (comparations[0][3] === comparations[1][3]) +
+        (comparations[0][3] === comparations[2][3]) +
+        (comparations[1][3] === comparations[2][3])
 
-  if (comparations.length === 3) {
-    const isShape =
-      (comparations[0][0] === comparations[1][0]) +
-      (comparations[0][0] === comparations[2][0]) +
-      (comparations[1][0] === comparations[2][0])
-    const isColor =
-      (comparations[0][1] === comparations[1][1]) +
-      (comparations[0][1] === comparations[2][1]) +
-      (comparations[1][1] === comparations[2][1])
-    const isSymbol =
-      (comparations[0][2] === comparations[1][2]) +
-      (comparations[0][2] === comparations[2][2]) +
-      (comparations[1][2] === comparations[2][2])
-    const isShade =
-      (comparations[0][3] === comparations[1][3]) +
-      (comparations[0][3] === comparations[2][3]) +
-      (comparations[1][3] === comparations[2][3])
-
-    if (isShape === 0 || isShape === 3) {
-      if (isColor === 0 || isColor === 3) {
-        if (isSymbol === 0 || isSymbol === 3) {
-          if (isShade === 0 || isShade === 3) {
-            toast.success('Correct set!')
+      if (isShape === 0 || isShape === 3) {
+        if (isColor === 0 || isColor === 3) {
+          if (isSymbol === 0 || isSymbol === 3) {
+            if (isShade === 0 || isShade === 3) {
+              toast.success('Correct set!')
+            } else {
+              toast.error('Incorrect set!')
+            }
           } else {
             toast.error('Incorrect set!')
           }
@@ -161,28 +168,35 @@ function Selector(attr) {
       } else {
         toast.error('Incorrect set!')
       }
-    } else {
-      toast.error('Incorrect set!')
+      comparations.splice(0, comparations.length)
     }
   }
 
-  for (let index = 0; index < comparations.length; index++) {
-    console.log(comparations[index])
+  function enableIt() {
+    console.log(comparations.length)
+    if (comparations.length === 0) {
+      setDisabled(false)
+    }
   }
-}
-
-function FigStack(attr) {
-  const [disable, setDisable] = React.useState(false)
 
   return (
     <button
+      className={''}
+      disabled={disabled}
       onClick={() => {
-        Selector(attr)
-        setDisable(true)
+        Selector()
+        setDisabled(true)
+        enableIt()
       }}
-      disabled={disable}
     >
-      <div className={'flex  border rounded-lg border-zinc-600 p-1'}>
+      <div
+        id='mystyle'
+        className={`${
+          disabled
+            ? 'flex rounded-xl py-2 px-6 bg-zinc-800 border border-zinc-700 '
+            : 'flex rounded-xl py-2 px-6 hover:bg-zinc-800 border border-zinc-800'
+        }`}
+      >
         {[...Array(attr.num)].map((e, i) => (
           <img
             className={`${attr.color}`}
@@ -199,20 +213,20 @@ function FigStack(attr) {
 
 function Card() {
   return (
-    <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white'>
+    <div className='flex flex-col items-center w-full px-5 sm:w-9/12 lg:w-6/12 text-white'>
       <p className='flex justify-start w-full text-4xl ml-10 mb-2 mt-5 font-semibold text-pink-600'>
         Set Game
       </p>
-      <div className='dark:bg-black bg-white rounded-xl w-full shadow-lg p-5'>
-        <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
+      <div className='dark:bg-black bg-white rounded-xl w-full shadow-lg py-6'>
+        {/* <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
           <p className='text-lg font-semibold text-zinc-200'>Set Found</p>
-        </div>
-        <div className='grid grid-cols-3 gap-10  text-white justify-items-center text-center'>
+        </div> */}
+        <div className='grid grid-cols-3 gap-y-10 text-white justify-items-center text-center'>
           {data.map((game) => FigStack(game))}
         </div>
-        <div className='mt-5 text-zinc-300'>
+        <div className='pl-10 pt-5'>
           <p>Sets possible: {}</p>
-          <p>Total cards left: {}</p>
+          <p>Total cards: {}</p>
         </div>
       </div>
     </div>
