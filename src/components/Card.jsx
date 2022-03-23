@@ -190,11 +190,10 @@ function FigStack(attr) {
       }}
     >
       <div
-        id='mystyle'
         className={`${
           disabled
-            ? 'flex rounded-xl py-2 px-6 bg-zinc-800 border border-zinc-700 '
-            : 'flex rounded-xl py-2 px-6 hover:bg-zinc-800 border border-zinc-800'
+            ? 'flex rounded-xl py-2 px-2 bg-zinc-800 border border-zinc-700 '
+            : 'flex rounded-xl py-2 px-2 hover:bg-zinc-800 border border-zinc-800'
         }`}
       >
         {[...Array(attr.num)].map((e, i) => (
@@ -213,7 +212,7 @@ function FigStack(attr) {
 
 function Card() {
   return (
-    <div className='flex flex-col items-center w-full px-5 sm:w-9/12 lg:w-6/12 text-white'>
+    <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white'>
       <p className='flex justify-start w-full text-4xl ml-10 mb-2 mt-5 font-semibold text-pink-600'>
         Set Game
       </p>
@@ -225,8 +224,8 @@ function Card() {
           {data.map((game) => FigStack(game))}
         </div>
         <div className='pl-10 pt-5'>
-          <p>Sets possible: {}</p>
-          <p>Total cards: {}</p>
+          <p>Sets possible: -{}</p>
+          <p>Total cards: -{}</p>
         </div>
       </div>
     </div>
