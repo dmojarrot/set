@@ -123,7 +123,7 @@ function FigStack(attr) {
       let shading = attr.href.id % 3 !== 0 ? attr.href.id % 3 : 3
       if (figure < 4) {
         figure = 1
-      } else if (figure > 3 && figure < 6) {
+      } else if (figure > 3 && figure < 7) {
         figure = 2
       } else {
         figure = 3
@@ -201,7 +201,7 @@ function FigStack(attr) {
             className={`${attr.color}`}
             src={attr.href.url}
             alt='W3Schools.com'
-            width={25}
+            width={30}
             height={30}
           />
         ))}
@@ -223,8 +223,8 @@ function Card() {
         <div className='grid grid-cols-3 gap-y-10 text-white justify-items-center text-center'>
           {data.map((game) => FigStack(game))}
         </div>
-        <div className='pl-10 pt-5'>
-          <p>Sets possible: -{}</p>
+        <div className='md:pl-10 pl-4 pt-5'>
+          <p>Possible sets: -{}</p>
           <p>Total cards: -{}</p>
         </div>
       </div>
