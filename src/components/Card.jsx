@@ -212,15 +212,15 @@ function FigStack(attr) {
 
 function Card() {
   return (
-    <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white pt-10'>
-      <p className='flex justify-start w-full text-4xl ml-10 mb-2 mt-5 font-semibold text-pink-600'>
+    <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white pt-5'>
+      <p className='flex justify-start w-full text-4xl ml-10 mb-2 sm:mt-0 md:mt-5 font-semibold text-pink-600'>
         Set Game
       </p>
       <div className='bg-black rounded-xl w-full shadow-lg py-6'>
         {/* <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
           <p className='text-lg font-semibold text-zinc-200'>Set Found</p>
         </div> */}
-        <div className='grid grid-cols-3 gap-y-10 text-white justify-items-center text-center'>
+        <div className='grid grid-cols-3 gap-y-6 sm:gap-y-8 text-white justify-items-center text-center'>
           {data.map((game) => FigStack(game))}
         </div>
         {/* <div className='md:pl-10 pl-4 pt-5'>
