@@ -2,8 +2,19 @@ import React, { useState } from 'react'
 import '../syles/card.css'
 import toast from 'react-hot-toast'
 
-function generateRandomInteger(possibilities, diff) {
-  return Math.floor(Math.random() * possibilities) + diff
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex--
+    ;[array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ]
+  }
+  return array
 }
 
 const possibilities = 3
@@ -49,68 +60,17 @@ const options = [
   },
 ]
 
-const data = [
-  {
-    href: options[generateRandomInteger(9, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-  {
-    href: options[generateRandomInteger(options.length, 0)],
-    num: generateRandomInteger(possibilities, 1),
-    color: colors[generateRandomInteger(possibilities, 0)],
-  },
-]
+const data = () => {
+  var dataArray = []
+  for (let i = 0; i < options.length; i++) {
+    for (let j = 0; j < colors.length; j++) {
+      for (let k = 1; k < possibilities + 1; k++) {
+        dataArray.push({ href: options[i], color: colors[j], num: k })
+      }
+    }
+  }
+  return shuffle(dataArray)
+}
 
 const comparations = []
 
@@ -211,17 +171,19 @@ function FigStack(attr) {
 }
 
 function Card() {
+  const [arrayData] = useState(data())
   return (
     <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white pt-5'>
       <p className='flex justify-start w-full text-4xl ml-10 mb-2 sm:mt-0 md:mt-5 font-semibold text-pink-600'>
         Set Game
       </p>
+
       <div className='bg-black rounded-xl w-full shadow-lg py-6'>
         {/* <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
           <p className='text-lg font-semibold text-zinc-200'>Set Found</p>
         </div> */}
         <div className='grid grid-cols-3 gap-y-6 sm:gap-y-8 text-white justify-items-center text-center'>
-          {data.map((game) => FigStack(game))}
+          {arrayData.slice(0, 12).map((game) => FigStack(game))}
         </div>
         {/* <div className='md:pl-10 pl-4 pt-5'>
           <p>Possible sets: -{}</p>
