@@ -1,82 +1,12 @@
 import React, { useState } from 'react'
 import '../syles/card.css'
 import toast from 'react-hot-toast'
-
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex)
-    currentIndex--
-    ;[array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ]
-  }
-  return array
-}
-
-const possibilities = 3
-
-const colors = ['red', 'green', 'purple']
-
-const options = [
-  {
-    id: 1,
-    url: require('../assets/shapes/DiamondOutlined.svg').default,
-  },
-  {
-    id: 2,
-    url: require('../assets/shapes/DiamondSolid.svg').default,
-  },
-  {
-    id: 3,
-    url: require('../assets/shapes/DiamondStriped.svg').default,
-  },
-  {
-    id: 4,
-    url: require('../assets/shapes/OvalOutlined.svg').default,
-  },
-  {
-    id: 5,
-    url: require('../assets/shapes/OvalSolid.svg').default,
-  },
-  {
-    id: 6,
-    url: require('../assets/shapes/OvalStriped.svg').default,
-  },
-  {
-    id: 7,
-    url: require('../assets/shapes/SquiggleOutlined.svg').default,
-  },
-  {
-    id: 8,
-    url: require('../assets/shapes/SquiggleSolid.svg').default,
-  },
-  {
-    id: 9,
-    url: require('../assets/shapes/SquiggleStriped.svg').default,
-  },
-]
-
-const data = () => {
-  var dataArray = []
-  for (let i = 0; i < options.length; i++) {
-    for (let j = 0; j < colors.length; j++) {
-      for (let k = 1; k < possibilities + 1; k++) {
-        dataArray.push({ href: options[i], color: colors[j], num: k })
-      }
-    }
-  }
-  return shuffle(dataArray)
-}
+import fillData from '../functions/fillData'
 
 const comparations = []
 
 function FigStack(attr) {
   const [disabled, setDisabled] = useState(false)
-
   function Selector() {
     if (comparations.length < 3) {
       let figure = attr.href.id
@@ -133,7 +63,6 @@ function FigStack(attr) {
   }
 
   function enableIt() {
-    console.log(comparations.length)
     if (comparations.length === 0) {
       setDisabled(false)
     }
@@ -171,7 +100,7 @@ function FigStack(attr) {
 }
 
 function Card() {
-  const [arrayData] = useState(data())
+  const [arrayData, setArrayData] = useState(fillData())
   return (
     <div className='flex flex-col items-center w-full px-5 sm:w-8/12 lg:w-6/12 text-white pt-5'>
       <p className='flex justify-start w-full text-4xl ml-10 mb-2 sm:mt-0 md:mt-5 font-semibold text-pink-600'>
@@ -179,16 +108,27 @@ function Card() {
       </p>
 
       <div className='bg-black rounded-xl w-full shadow-lg py-6'>
-        {/* <div className='bg-zinc-800 flex justify-center border border-zinc-700 rounded p-5 my-5'>
-          <p className='text-lg font-semibold text-zinc-200'>Set Found</p>
-        </div> */}
         <div className='grid grid-cols-3 gap-y-6 sm:gap-y-8 text-white justify-items-center text-center'>
           {arrayData.slice(0, 12).map((game) => FigStack(game))}
         </div>
-        {/* <div className='md:pl-10 pl-4 pt-5'>
-          <p>Possible sets: -{}</p>
-          <p>Total cards: -{}</p>
-        </div> */}
+
+        <div className='pt-4'>
+          <div className='w-full flex justify-center border-t border-gray-700'></div>
+        </div>
+        <div className='flex justify-end'>
+          {/* <div className='md:pl-10 pl-4 pt-5'>
+            <p>Possible sets: -{}</p>
+            <p>Total cards: -{}</p>
+          </div> */}
+          <button
+            className='py-1 px-3 mr-3 mt-5 border border-gray-700 rounded-full text-pink-600 bg-zinc-900'
+            onClick={() => {
+              setArrayData(fillData())
+            }}
+          >
+            Shuffle
+          </button>
+        </div>
       </div>
     </div>
   )
