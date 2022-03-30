@@ -10,7 +10,7 @@ function App() {
           <Toaster />
         </div>
 
-        <div className='fixed right-0 bottom-0 pb-5 pr-2'>
+        <div className='fixed md:right-0 bottom-0 pb-5 px-1'>
           <p className='text-pink-600 text-md'>In progress...</p>
           <p className='text-zinc-300 text-xs'>
             One set at a time, then refresh
